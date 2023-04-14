@@ -76,6 +76,7 @@
             android:textSize="15sp"
             android:text="Search for Meals on Web Service"
             app:layout_constraintTop_toBottomOf="@id/button3"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
