@@ -25,7 +25,7 @@ class SearchForMeals : AppCompatActivity() {
         // Get the AppDatabase instance
         appDb = AppDatabase.getDatabase(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_for_meals)
+        setContentView(R.layout.recylerview)
 
         // Initialize necessary views and adapters
         editText = findViewById(R.id.edit_text)

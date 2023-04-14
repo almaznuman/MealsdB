@@ -35,7 +35,7 @@ class WebServiceSearch : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         appDb = AppDatabase.getDatabase(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_for_meals)
+        setContentView(R.layout.recylerview)
         editText = findViewById(R.id.edit_text)
         button = findViewById(R.id.button)
         lol = findViewById(R.id.lol)
