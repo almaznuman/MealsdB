@@ -19,11 +19,12 @@ class IngredientSearchActivity : AppCompatActivity() {
     // Declare the properties of the class
     private lateinit var appDb: AppDatabase
     private val mealsList = mutableListOf<Meals>()
-    private lateinit var button:Button
-    private lateinit var button3:Button
-    private lateinit var scrollView2:ScrollView
+    private lateinit var button: Button
+    private lateinit var button3: Button
+    private lateinit var scrollView2: ScrollView
     private lateinit var editText: EditText
-    private lateinit var tv:TextView
+    private lateinit var tv: TextView
+
     // button animations
     private val buttonClick = AlphaAnimation(1f, 0.8f)
 
@@ -40,16 +41,16 @@ class IngredientSearchActivity : AppCompatActivity() {
         val stb = StringBuilder()
 
         // Get references to the UI elements
-        button=findViewById(R.id.button)
-        button3=findViewById(R.id.button3)
-        scrollView2=findViewById(R.id.scrollView2)
-        editText=findViewById(R.id.edit_text)
-        tv=findViewById(R.id.tv)
+        button = findViewById(R.id.button)
+        button3 = findViewById(R.id.button3)
+        scrollView2 = findViewById(R.id.scrollView2)
+        editText = findViewById(R.id.edit_text)
+        tv = findViewById(R.id.tv)
 
         // Set an OnClickListener for the "Search" button
         button.setOnClickListener {
             it.startAnimation(buttonClick)
-            scrollView2.scrollTo(0,0)
+            scrollView2.scrollTo(0, 0)
             if (editText.text.isBlank()) {
                 // If the search box is blank, show a Toast message
                 Toast.makeText(this, "Please enter an ingredient", Toast.LENGTH_SHORT).show()
@@ -94,7 +95,7 @@ class IngredientSearchActivity : AppCompatActivity() {
                 }
                 // Show a Toast message to indicate that meals were added
                 Toast.makeText(this, "Meals Added", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 // If there are no meals in the mealsList, show a Toast message
                 Toast.makeText(this, "No meals to save", Toast.LENGTH_SHORT).show()
             }
@@ -154,7 +155,7 @@ class IngredientSearchActivity : AppCompatActivity() {
                 for (j in 1..20) {
                     val ingredient = mealObject["strIngredient$j"]
                     val measure = mealObject["strMeasure$j"]
-                    if (ingredient!=""&& measure!="") {
+                    if (ingredient != "" && measure != "") {
                         allmeals.append("$ingredient: $measure\n")
                         ingredientlist.add(ingredient.toString())
                         measureslist.add(measure.toString())
@@ -184,13 +185,15 @@ class IngredientSearchActivity : AppCompatActivity() {
             }
         }//adding to the UI textview
         runOnUiThread {
-           tv.text = allmeals.toString()
+            tv.text = allmeals.toString()
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         mealsList.clear()
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("data", tv.text.toString())

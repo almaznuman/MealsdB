@@ -62,7 +62,11 @@ class SearchForMeals : AppCompatActivity() {
                             myAdapter.notifyDataSetChanged()
                             // If no meals were found, display a message to the user
                         } else {
-                            Toast.makeText(this@SearchForMeals, "No meals found", Toast.LENGTH_SHORT)
+                            Toast.makeText(
+                                this@SearchForMeals,
+                                "No meals found",
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         }
                     }
@@ -89,6 +93,7 @@ class SearchForMeals : AppCompatActivity() {
         }
         return isNotEmpty
     }
+
     // Coroutine function to search the database for meals that match an ingredient
     private suspend fun getmealingredientfromdb(mealname: String): Boolean {
         var isNotEmpty = false

@@ -11,10 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
 
-class MyListAdapter(private val context:Context,private val mylist:ArrayList<String>,private val mylist2:ArrayList<String>):RecyclerView.Adapter<MyListAdapter.MyViewHolder>(){
+class MyListAdapter(
+    private val context: Context,
+    private val mylist: ArrayList<String>,
+    private val mylist2: ArrayList<String>
+) : RecyclerView.Adapter<MyListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): MyViewHolder {
-        val mylistitem=LayoutInflater.from(context).inflate(R.layout.list,viewgroup,false)
+        val mylistitem = LayoutInflater.from(context).inflate(R.layout.list, viewgroup, false)
         return MyViewHolder(mylistitem)
     }
 
@@ -23,18 +27,18 @@ class MyListAdapter(private val context:Context,private val mylist:ArrayList<Str
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(mylist[position],mylist2[position])
+        holder.bind(mylist[position], mylist2[position])
     }
 
-    inner class MyViewHolder(itemView:View): ViewHolder(itemView){
+    inner class MyViewHolder(itemView: View) : ViewHolder(itemView) {
 
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
 
-        fun bind(myItem: String,myitem2:String) {
+        fun bind(myItem: String, myitem2: String) {
             Picasso.get().load(myitem2).into(imageView)
             itemView.findViewById<TextView>(R.id.tv).text = myItem
-            itemView.setOnClickListener{
-                Toast.makeText(context,myItem,Toast.LENGTH_LONG).show()
+            itemView.setOnClickListener {
+                Toast.makeText(context, myItem, Toast.LENGTH_LONG).show()
             }
         }
     }

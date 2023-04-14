@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button3: Button
     private lateinit var button4: Button
     private val buttonClick = AlphaAnimation(1f, 0.8f) // Button click animation
+
     // Declare database variable
     private lateinit var appDb: AppDatabase
 

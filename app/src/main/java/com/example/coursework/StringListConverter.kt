@@ -1,6 +1,7 @@
 package com.example.coursework
 
 import androidx.room.TypeConverter
+
 //Converts list of strings to a string and vice versa for meals database
 class StringListConverter {
     @TypeConverter

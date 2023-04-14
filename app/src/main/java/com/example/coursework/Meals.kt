@@ -3,10 +3,11 @@ package com.example.coursework
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+
 //Dataclass for meals
 @Entity(tableName = "meals")
 data class Meals(
-    @ColumnInfo(name = "id")  val id: Int?,
+    @ColumnInfo(name = "id") val id: Int?,
     @PrimaryKey @ColumnInfo(name = "meal_name") val mealName: String,
     @ColumnInfo(name = "drink_Alternate") val drinkAlternate: String?,
     @ColumnInfo(name = "category") val category: String?,

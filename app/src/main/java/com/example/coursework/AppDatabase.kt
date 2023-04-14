@@ -9,7 +9,6 @@ import androidx.room.*
 abstract class AppDatabase : RoomDatabase() {
     abstract fun mealsdao(): MealsDao
     // An abstract function that returns a DAO for the Meals table.
-
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
