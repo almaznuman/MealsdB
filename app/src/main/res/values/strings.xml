@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MealsDB</string>
+    <string name="add_meals_to_db">Add Meals to Database</string>
+    <string name="search_for_meals_by_ingredient">Search for Meals By Ingredient</string>
+    <string name="search_for_meals">Search for Meals</string>
+</resources>
