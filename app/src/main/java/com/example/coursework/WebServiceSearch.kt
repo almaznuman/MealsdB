@@ -59,13 +59,18 @@ class WebServiceSearch : AppCompatActivity() {
                 mealthumbnaillist.clear()
                 mealnamelist.clear()
                 val mealname = editText.text.toString()
-                parseJSON(mealname)
-                myAdapter.notifyDataSetChanged()
+                val isempty = parseJSON(mealname)
+                if (isempty) {
+                    Toast.makeText(this, "No meals found", Toast.LENGTH_SHORT).show()
+                } else {
+                    myAdapter.notifyDataSetChanged()
+                }
             }
         }
     }
 
-    private fun parseJSON(mealname: String) {
+    private fun parseJSON(mealname: String): Boolean {
+        var isempty = false
         // Create a URL object with the API endpoint and query parameter
         val url = URL("https://www.themealdb.com/api/json/v1/1/search.php?s=$mealname")
         // Open a connection to the URL
@@ -89,7 +94,7 @@ class WebServiceSearch : AppCompatActivity() {
                     val mealsArray: JSONArray? = json.optJSONArray("meals")
                     // If the array is null, do nothing
                     if (mealsArray == null) {
-                        //do nothing
+                        isempty = true
                     } else {
                         // Otherwise, iterate through the array and add the meal names and images to the lists
                         for (i in 0 until mealsArray.length()) {
@@ -104,5 +109,6 @@ class WebServiceSearch : AppCompatActivity() {
                 }
             }
         }
+        return isempty
     }
 }
