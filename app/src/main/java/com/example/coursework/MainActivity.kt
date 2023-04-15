@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.animation.AlphaAnimation
 import android.widget.Button
 import android.widget.Toast
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var button1: Button
@@ -62,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun writeData() {
         //Hardcoding Database entries
         val meal1 = Meals(
@@ -193,12 +192,13 @@ class MainActivity : AppCompatActivity() {
             null
         )
 
-        GlobalScope.launch(Dispatchers.IO) {
-            //add meals to database
-            appDb.mealsdao().insertMeal(meal1)
-            appDb.mealsdao().insertMeal(meal2)
-            appDb.mealsdao().insertMeal(meal3)
-            appDb.mealsdao().insertMeal(meal4)
+        runBlocking {
+            launch {
+                appDb.mealsdao().insertMeal(meal1)
+                appDb.mealsdao().insertMeal(meal2)
+                appDb.mealsdao().insertMeal(meal3)
+                appDb.mealsdao().insertMeal(meal4)
+            }
         }
     }
 }
