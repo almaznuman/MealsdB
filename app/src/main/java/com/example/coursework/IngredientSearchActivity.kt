@@ -24,7 +24,6 @@ class IngredientSearchActivity : AppCompatActivity() {
     private lateinit var scrollView2: ScrollView
     private lateinit var editText: EditText
     private lateinit var tv: TextView
-
     // button animations
     private val buttonClick = AlphaAnimation(1f, 0.8f)
 

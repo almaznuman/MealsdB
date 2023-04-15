@@ -22,10 +22,7 @@ import java.net.URL
 class WebServiceSearch : AppCompatActivity() {
     private lateinit var appDb: AppDatabase
     private lateinit var lol: RecyclerView
-
-    /**
-     * button animations
-     */
+    //button animations
     private val buttonClick = AlphaAnimation(1f, 0.8f)
     private var mealthumbnaillist = ArrayList<String>()
     private var mealnamelist = ArrayList<String>()
