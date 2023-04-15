@@ -9,7 +9,6 @@ interface MealsDao {
     @Query("SELECT meal_name FROM meals WHERE meal_name LIKE '%' || :input || '%'")
     suspend fun getMealNames(input: String): List<String>
 
-
     //query to get meal name where ingredient is like the input
     @Query("SELECT meal_name FROM meals WHERE ingredients LIKE '%' || :input || '%'")
     suspend fun getMealNamesByIngredient(input: String): List<String>
