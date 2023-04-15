@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
 
+//refference https://youtu.be/JkFGUJyY-bQ
+
 class MyListAdapter(
     private val context: Context,
     private val mylist: ArrayList<String>,
