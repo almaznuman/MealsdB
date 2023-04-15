@@ -33,7 +33,7 @@ class SearchForMeals : AppCompatActivity() {
         editText = findViewById(R.id.edit_text)
         button = findViewById(R.id.button)
         val myAdapter = MyListAdapter(this, mealnamelist, mealthumbnaillist,mealCategorylist)
-        lol = findViewById(R.id.lol)
+        lol = findViewById(R.id.recyclerview)
         lol.adapter = myAdapter
         lol.layoutManager = LinearLayoutManager(this)
         button.setOnClickListener {

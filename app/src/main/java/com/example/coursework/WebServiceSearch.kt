@@ -36,7 +36,7 @@ class WebServiceSearch : AppCompatActivity() {
         setContentView(R.layout.recylerview)
         editText = findViewById(R.id.edit_text)
         button = findViewById(R.id.button)
-        lol = findViewById(R.id.lol)
+        lol = findViewById(R.id.recyclerview)
 
         // Create an adapter for the RecyclerView and set it
         val myAdapter = MyListAdapter(this, mealnamelist, mealthumbnaillist,mealCategorylist)
@@ -55,7 +55,7 @@ class WebServiceSearch : AppCompatActivity() {
                 // Otherwise, clear the lists and parse the JSON
                 clearlists()
                 val mealname = editText.text.toString()
-                val isempty = parseJSON(mealname)
+                val isempty = apiConnection(mealname)
                 if (isempty) {
                     Toast.makeText(this, "No meals found", Toast.LENGTH_SHORT).show()
                 } else {
@@ -65,7 +65,7 @@ class WebServiceSearch : AppCompatActivity() {
         }
     }
 
-    private fun parseJSON(mealname: String): Boolean {
+    private fun apiConnection(mealname: String): Boolean {
         var isempty = false
         val url = URL("https://www.themealdb.com/api/json/v1/1/search.php?s=$mealname")
         val con: HttpURLConnection = url.openConnection() as HttpURLConnection
