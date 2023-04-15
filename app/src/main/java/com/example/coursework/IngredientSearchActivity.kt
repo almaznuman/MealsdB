@@ -101,12 +101,11 @@ class IngredientSearchActivity : AppCompatActivity() {
     }
 
     private fun apiConnection(stb: StringBuilder) {
-        // Convert StringBuilder to JSONObject
+        // Convert the StringBuilder to a JSONObject
         val json = JSONObject(stb.toString())
         val allmeals = StringBuilder()
         // Retrieve meals array from JSONObject
         val mealsArray: JSONArray? = json.optJSONArray("meals")
-
         if (mealsArray == null) {
             allmeals.append("No meals found")
         } else {
