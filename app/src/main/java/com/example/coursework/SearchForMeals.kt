@@ -20,6 +20,7 @@ class SearchForMeals : AppCompatActivity() {
     private val buttonClick = AlphaAnimation(1f, 0.8f)
     private var mealthumbnaillist = ArrayList<String>()
     private var mealnamelist = ArrayList<String>()
+    private var mealCategorylist = ArrayList<String>()
     private lateinit var editText: EditText
     private lateinit var button: Button
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class SearchForMeals : AppCompatActivity() {
         // Initialize necessary views and adapters
         editText = findViewById(R.id.edit_text)
         button = findViewById(R.id.button)
-        val myAdapter = MyListAdapter(this, mealnamelist, mealthumbnaillist)
+        val myAdapter = MyListAdapter(this, mealnamelist, mealthumbnaillist,mealCategorylist)
         lol = findViewById(R.id.lol)
         lol.adapter = myAdapter
         lol.layoutManager = LinearLayoutManager(this)
@@ -82,12 +83,14 @@ class SearchForMeals : AppCompatActivity() {
         withContext(Dispatchers.IO) {
             val mealnames = appDb.mealsdao().getMealNames(mealname)
             val mealthumb = appDb.mealsdao().getMealThumb(mealname)
+            val mealcategory= appDb.mealsdao().getMealcategorybymealname(mealname)
             withContext(Dispatchers.Main) {
 
                 // If meals were found, add them to the appropriate lists
                 if (mealnames.isNotEmpty()) {
                     mealnamelist.addAll(mealnames)
                     mealthumbnaillist.addAll(mealthumb)
+                    mealCategorylist.addAll(mealcategory)
                     isNotEmpty = true
                 }
             }

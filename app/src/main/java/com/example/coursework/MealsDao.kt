@@ -17,13 +17,21 @@ interface MealsDao {
     @Query("SELECT mealThumb FROM meals WHERE meal_name LIKE '%' || :input || '%'")
     suspend fun getMealThumb(input: String): List<String>
 
+    @Query("SELECT category FROM meals WHERE meal_name LIKE '%' || :input || '%'")
+    suspend fun getMealcategorybymealname(input: String): List<String>
+
     //get thumbnail of meal where ingredient is like the input
     @Query("SELECT mealThumb FROM meals WHERE ingredients LIKE '%' || :input || '%'")
     suspend fun getMealThumbByIngredient(input: String): List<String>
 
+    @Query("SELECT category FROM meals WHERE ingredients LIKE '%' || :input || '%'")
+    suspend fun getMealcategoryByIngredient(input: String): List<String>
+
+    //Insert Data to local Database, if there is an primary key conflict, data will be overwritten
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeal(meal: Meals)
 
+    //unused queries
     @Delete
     suspend fun deleteMeal(meal: Meals)
 

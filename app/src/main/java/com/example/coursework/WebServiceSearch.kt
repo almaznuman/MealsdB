@@ -26,6 +26,7 @@ class WebServiceSearch : AppCompatActivity() {
     private val buttonClick = AlphaAnimation(1f, 0.8f)
     private var mealthumbnaillist = ArrayList<String>()
     private var mealnamelist = ArrayList<String>()
+    private var mealCategorylist = ArrayList<String>()
     private lateinit var editText: EditText
     private lateinit var button: Button
 
@@ -38,7 +39,7 @@ class WebServiceSearch : AppCompatActivity() {
         lol = findViewById(R.id.lol)
 
         // Create an adapter for the RecyclerView and set it
-        val myAdapter = MyListAdapter(this, mealnamelist, mealthumbnaillist)
+        val myAdapter = MyListAdapter(this, mealnamelist, mealthumbnaillist,mealCategorylist)
         lol.adapter = myAdapter
         lol.layoutManager = LinearLayoutManager(this)
 
@@ -47,14 +48,12 @@ class WebServiceSearch : AppCompatActivity() {
             it.startAnimation(buttonClick)
             // If the EditText is empty, show a message
             if (editText.text.isBlank()) {
-                mealthumbnaillist.clear()
-                mealnamelist.clear()
+                clearlists()
                 myAdapter.notifyDataSetChanged()
                 Toast.makeText(this, "Please enter an ingredient", Toast.LENGTH_SHORT).show()
             } else {
                 // Otherwise, clear the lists and parse the JSON
-                mealthumbnaillist.clear()
-                mealnamelist.clear()
+                clearlists()
                 val mealname = editText.text.toString()
                 val isempty = parseJSON(mealname)
                 if (isempty) {
@@ -68,11 +67,8 @@ class WebServiceSearch : AppCompatActivity() {
 
     private fun parseJSON(mealname: String): Boolean {
         var isempty = false
-        // Create a URL object with the API endpoint and query parameter
         val url = URL("https://www.themealdb.com/api/json/v1/1/search.php?s=$mealname")
-        // Open a connection to the URL
         val con: HttpURLConnection = url.openConnection() as HttpURLConnection
-        // Create a StringBuilder to hold the response
         val stb = StringBuilder()
         // Use a coroutine to run the network request on a background thread
         runBlocking {
@@ -85,7 +81,6 @@ class WebServiceSearch : AppCompatActivity() {
                         line = bf.readLine()
                     }
                     bf.close()
-                    // Parse the JSON response
                     val json = JSONObject(stb.toString())
                     // Get the "meals" array from the JSON object
                     val mealsArray: JSONArray? = json.optJSONArray("meals")
@@ -93,13 +88,15 @@ class WebServiceSearch : AppCompatActivity() {
                     if (mealsArray == null) {
                         isempty = true
                     } else {
-                        // Otherwise, iterate through the array and add the meal names and images to the lists
+                        //iterate through the array and add the meal names and images to the lists
                         for (i in 0 until mealsArray.length()) {
                             val meal: JSONObject = mealsArray[i] as JSONObject
                             val mealname = meal["strMeal"] as String
                             val mealImagesource = meal["strMealThumb"] as String
+                            val mealcategory=meal["strCategory"] as String
                             mealnamelist.add(mealname)
                             mealthumbnaillist.add(mealImagesource)
+                            mealCategorylist.add(mealcategory)
                         }
                         stb.clear()
                     }
@@ -107,5 +104,10 @@ class WebServiceSearch : AppCompatActivity() {
             }
         }
         return isempty
+    }
+    private fun clearlists(){
+        mealCategorylist.clear()
+        mealnamelist.clear()
+        mealthumbnaillist.clear()
     }
 }

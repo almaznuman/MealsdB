@@ -22,6 +22,7 @@ class IngredientSearchActivity : AppCompatActivity() {
     private lateinit var scrollView2: ScrollView
     private lateinit var editText: EditText
     private lateinit var tv: TextView
+
     // button animations
     private val buttonClick = AlphaAnimation(1f, 0.8f)
 
@@ -68,7 +69,7 @@ class IngredientSearchActivity : AppCompatActivity() {
                                 line = bf.readLine()
                             }
                             bf.close()
-                            parseJSON(stb)
+                            apiConnection(stb)
                             stb.clear()
                         }
                     }
@@ -99,7 +100,7 @@ class IngredientSearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun parseJSON(stb: StringBuilder) {
+    private fun apiConnection(stb: StringBuilder) {
         // Convert StringBuilder to JSONObject
         val json = JSONObject(stb.toString())
         val allmeals = StringBuilder()
