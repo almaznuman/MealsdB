@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     private fun writeData() {
         //Hardcoding Database entries
         val meal1 = Meals(
-            null,
+            1,
             "Sweet and Sour Pork",
             null,
             "Pork",
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             null
         )
         val meal2 = Meals(
-            null,
+            2,
             "Chicken Marengo",
             null,
             "Chicken",
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
             null,
         )
         val meal3 = Meals(
-            null,
+            3,
             "Beef Banh Mi Bowls\n with Sriracha Mayo, \nCarrot & Pickled Cucumber",
             null,
             "Beef",
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
             null
         )
         val meal4 = Meals(
-            null,
+            4,
             "Leblebi Soup",
             null,
             "Vegetarian",
