@@ -115,7 +115,7 @@ class IngredientSearchActivity : AppCompatActivity() {
                 // Retrieve the current meal object and its name
                 val meal: JSONObject = mealsArray[i] as JSONObject
                 val mealname = meal["strMeal"] as String
-                allmeals.append("${i + 1}) $mealname \n")
+                allmeals.append("${i + 1}) $mealname \n\n")
                 // Create a URL object for the current meal's API endpoint
                 val url = URL("https://www.themealdb.com/api/json/v1/1/search.php?s=$mealname")
                 val con: HttpURLConnection = url.openConnection() as HttpURLConnection
