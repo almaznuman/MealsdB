@@ -10,7 +10,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import java.io.IOException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -54,18 +57,16 @@ class MyListAdapter(
     }
     //Displays the image from the url function
     fun displayImageFromUrl(imageView: ImageView, url: String) {
-        val thread = Thread {
-            try {
-                val connection = URL(url).openConnection() as HttpURLConnection
-                connection.doInput = true
-                connection.connect()
-                val input = connection.inputStream
-                val bitmap = BitmapFactory.decodeStream(input)
-                imageView.post { imageView.setImageBitmap(bitmap) }
-            } catch (e: IOException) {
-                e.printStackTrace()
+        //Co-routine used to load up images in the background to prevent blocking the main thread
+        GlobalScope.launch(Dispatchers.IO) {
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.doInput = true
+            connection.connect()
+            val input = connection.inputStream
+            val bitmap = BitmapFactory.decodeStream(input)
+            withContext(Dispatchers.Main) {
+                imageView.setImageBitmap(bitmap)
             }
         }
-        thread.start()
     }
 }
