@@ -6,21 +6,18 @@ import android.view.animation.AlphaAnimation
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SearchForMeals : AppCompatActivity() {
     private lateinit var appDb: AppDatabase
-    private lateinit var lol: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     //button animations
     private val buttonClick = AlphaAnimation(1f, 0.8f)
-    private var mealthumbnaillist = ArrayList<String>()
-    private var mealnamelist = ArrayList<String>()
-    private var mealCategorylist = ArrayList<String>()
     private lateinit var editText: EditText
     private lateinit var button: Button
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,90 +29,53 @@ class SearchForMeals : AppCompatActivity() {
         // Initialize necessary views and adapters
         editText = findViewById(R.id.edit_text)
         button = findViewById(R.id.button)
-        val myAdapter = MyListAdapter(this, mealnamelist, mealthumbnaillist,mealCategorylist)
-        lol = findViewById(R.id.recyclerview)
-        lol.adapter = myAdapter
-        lol.layoutManager = LinearLayoutManager(this)
+        var model= ViewModelProvider(this).get(ViewModel::class.java)
+        val myAdapter = MyListAdapter(this, model.mealnamelist, model.mealthumbnaillist,model.mealCategorylist)
+        recyclerView = findViewById(R.id.recyclerview)
+        recyclerView.adapter = myAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
         button.setOnClickListener {
             it.startAnimation(buttonClick)
 
             // If the search field is blank, display a message to the user
             if (editText.text.isBlank()) {
-                mealthumbnaillist.clear()
-                mealnamelist.clear()
+                clearlists()
                 myAdapter.notifyDataSetChanged()
                 Toast.makeText(this, "Please enter an ingredient", Toast.LENGTH_SHORT).show()
 
                 // Otherwise, search the database for meals that match the given ingredient
             } else {
-                mealthumbnaillist.clear()
-                mealnamelist.clear()
+                clearlists()
                 val information = editText.text.toString()
                 GlobalScope.launch(Dispatchers.Main) {
-                    val isNotEmpty = getmealnamesfromdb(information)
+                    val isNotEmpty = model.getmealnamesfromdb(information,appDb)
                     // If meals were found, update the adapter with the new data
                     if (isNotEmpty) {
                         myAdapter.notifyDataSetChanged()
                         // If no meals were found with that name, search for meals that contain that ingredient
                     } else {
-                        val isNotEmpty2 = getmealingredientfromdb(information)
+                        val isNotEmpty2 = model.getmealingredientfromdb(information,appDb)
                         // If meals were found, update the adapter with the new data
                         if (isNotEmpty2) {
                             myAdapter.notifyDataSetChanged()
                             // If no meals were found, display a message to the user
                         } else {
+                            clearlists()
                             Toast.makeText(
                                 this@SearchForMeals,
                                 "No meals found",
                                 Toast.LENGTH_SHORT
-                            )
-                                .show()
+                            ).show()
                         }
                     }
                 }
             }
         }
     }
-
-    // Coroutine function to search the database for meals that match a given name
-    private suspend fun getmealnamesfromdb(mealname: String): Boolean {
-        var isNotEmpty = false
-        withContext(Dispatchers.IO) {
-            val mealnames = appDb.mealsdao().getMealNames(mealname)
-            val mealthumb = appDb.mealsdao().getMealThumb(mealname)
-            val mealcategory= appDb.mealsdao().getMealcategorybymealname(mealname)
-            withContext(Dispatchers.Main) {
-
-                // If meals were found, add them to the appropriate lists
-                if (mealnames.isNotEmpty()) {
-                    mealnamelist.addAll(mealnames)
-                    mealthumbnaillist.addAll(mealthumb)
-                    mealCategorylist.addAll(mealcategory)
-                    isNotEmpty = true
-                }
-            }
-        }
-        return isNotEmpty
-    }
-
-    // Coroutine function to search the database for meals that match an ingredient
-    private suspend fun getmealingredientfromdb(mealname: String): Boolean {
-        var isNotEmpty = false
-        withContext(Dispatchers.IO) {
-            val mealnames = appDb.mealsdao().getMealNamesByIngredient(mealname)
-            val mealthumb = appDb.mealsdao().getMealThumbByIngredient(mealname)
-            val mealcategory= appDb.mealsdao().getMealcategoryByIngredient(mealname)
-            withContext(Dispatchers.Main) {
-
-                // If meals were found, add them to the appropriate lists
-                if (mealnames.isNotEmpty()) {
-                    mealnamelist.addAll(mealnames)
-                    mealthumbnaillist.addAll(mealthumb)
-                    mealCategorylist.addAll(mealcategory)
-                    isNotEmpty = true
-                }
-            }
-        }
-        return isNotEmpty
+    private fun clearlists(){
+        var model= ViewModelProvider(this).get(ViewModel::class.java)
+        model.mealCategorylist.clear()
+        model.mealnamelist.clear()
+        model.mealthumbnaillist.clear()
     }
 }
