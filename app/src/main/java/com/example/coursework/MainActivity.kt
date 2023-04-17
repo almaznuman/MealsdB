@@ -1,20 +1,29 @@
 package com.example.coursework
 
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.animation.AlphaAnimation
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import kotlinx.coroutines.*
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private lateinit var button1: Button
     private lateinit var button2: Button
     private lateinit var button3: Button
     private lateinit var button4: Button
+
     //button animations
     private val buttonClick = AlphaAnimation(1f, 0.8f) // Button click animation
+
     // Declare database variable
     private lateinit var appDb: AppDatabase
 
@@ -30,6 +39,26 @@ class MainActivity : AppCompatActivity() {
         button3 = findViewById(R.id.button3)
         button4 = findViewById(R.id.button4)
 
+        //check for internet connection
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = cm.activeNetwork
+        val capabilities = cm.getNetworkCapabilities(network)
+
+        if (capabilities == null || !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
+            AlertDialog.Builder(this)
+                .setTitle("No internet connection")
+                .setMessage("Connect to the internet to use this app")
+                .setPositiveButton("Connect") { _, _ ->
+                    // Open Wi-Fi settings page
+                    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+                    startActivity(intent)
+                }
+                .setNegativeButton("Quit") { _, _ ->
+                    exitProcess(0)
+                }
+                .setCancelable(false)
+                .show()
+        }
         // Set onClickListeners for buttons
         button1.setOnClickListener {
             // Start button click animation
@@ -200,5 +229,30 @@ class MainActivity : AppCompatActivity() {
                 appDb.mealsdao().insertMeal(meal4)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //check for internet connection
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = cm.activeNetwork
+        val capabilities = cm.getNetworkCapabilities(network)
+
+        if (capabilities == null || !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
+            AlertDialog.Builder(this)
+                .setTitle("No internet connection")
+                .setMessage("Connect to the internet to use this app")
+                .setPositiveButton("Connect") { _, _ ->
+                    // Open Wi-Fi settings page
+                    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+                    startActivity(intent)
+                }
+                .setNegativeButton("Quit") { _, _ ->
+                    exitProcess(0)
+                }
+                .setCancelable(false)
+                .show()
+        }
+
     }
 }
