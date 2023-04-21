@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.animation.AlphaAnimation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -16,7 +17,6 @@ class IngredientSearchActivity : AppCompatActivity() {
 
     // Declare the properties of the class
     private lateinit var appDb: AppDatabase
-    private val mealsList = mutableListOf<Meals>()
     private lateinit var button: Button
     private lateinit var button3: Button
     private lateinit var scrollView2: ScrollView
@@ -28,22 +28,18 @@ class IngredientSearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Set the layout for the activity
         setContentView(R.layout.activity_ingredient_search)
-
         // Initialize the app database
         appDb = AppDatabase.getDatabase(this)
-
+        val model= ViewModelProvider(this)[ViewModel::class.java]
         // Create a StringBuilder object to hold the JSON response
         val stb = StringBuilder()
-
-        // Get references to the UI elements
         button = findViewById(R.id.button)
         button3 = findViewById(R.id.button3)
         scrollView2 = findViewById(R.id.scrollView2)
         editText = findViewById(R.id.edit_text)
         tv = findViewById(R.id.tv)
+        tv.text =model.ingredientsInformation
 
         // Set an OnClickListener for the "Search" button
         button.setOnClickListener {
@@ -80,9 +76,9 @@ class IngredientSearchActivity : AppCompatActivity() {
         // Set an OnClickListener for the "Save" button
         button3.setOnClickListener {
             it.startAnimation(buttonClick)
-            if (mealsList.size > 0) {
+            if (model.mealsList.size > 0) {
                 // If there are meals in the mealsList, add each meal to the database
-                for (meal in mealsList) {
+                for (meal in model.mealsList) {
                     runBlocking {
                         launch {
                             withContext(Dispatchers.IO) {
@@ -97,16 +93,19 @@ class IngredientSearchActivity : AppCompatActivity() {
                 // If there are no meals in the mealsList, show a Toast message
                 Toast.makeText(this, "No meals to save", Toast.LENGTH_SHORT).show()
             }
+            clear()
         }
     }
 
     private fun apiConnection(stb: StringBuilder) {
+        val model= ViewModelProvider(this).get(ViewModel::class.java)
         // Convert the StringBuilder to a JSONObject
         val json = JSONObject(stb.toString())
         val allmeals = StringBuilder()
         // Retrieve meals array from JSONObject
         val mealsArray: JSONArray? = json.optJSONArray("meals")
         if (mealsArray == null) {
+            model.ingredientsInformation=""
             allmeals.append("No meals found")
         } else {
             // Loop through each meal object in the meals array
@@ -160,7 +159,7 @@ class IngredientSearchActivity : AppCompatActivity() {
                 }
                 allmeals.append("\n")
                 // Create a new Meals object and add it to a list
-                mealsList.add(
+                model.mealsList.add(
                     Meals(
                         mealObject["idMeal"].toString().toInt(),
                         mealObject["strMeal"].toString(),
@@ -180,24 +179,15 @@ class IngredientSearchActivity : AppCompatActivity() {
                     )
                 )
             }
+            model.ingredientsInformation= allmeals.toString()
         }//adding to the UI textview
         runOnUiThread {
-            tv.text = allmeals.toString()
+            tv.text =model.ingredientsInformation
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mealsList.clear()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("data", tv.text.toString())
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        tv.setText(savedInstanceState.getString("data"))
+    private fun clear(){
+        val model= ViewModelProvider(this)[ViewModel::class.java]
+        model.mealsList.clear()
+        model.ingredientsInformation=""
     }
 }

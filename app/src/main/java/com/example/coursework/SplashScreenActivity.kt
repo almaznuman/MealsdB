@@ -3,23 +3,25 @@ package com.example.coursework
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import kotlin.concurrent.schedule
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
+    private lateinit var imageView: ImageView
+
     /**
      * Splashscreen activity
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.coverpage)
-        val intent = Intent(this, MainActivity::class.java)
-        /**
-         * Timer to delay intent for user-friendliness
-         */
-        Timer().schedule(3000) {
+        imageView = findViewById(R.id.imageView)
+        imageView.alpha = 0f
+        imageView.animate().setDuration(1000).alpha(1f).withEndAction {
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()

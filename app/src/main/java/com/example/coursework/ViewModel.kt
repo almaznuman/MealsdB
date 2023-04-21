@@ -16,6 +16,8 @@ class ViewModel: ViewModel() {
     var mealnamelist=  ArrayList<String>()
     var mealthumbnaillist = ArrayList<String>()
     var mealCategorylist = ArrayList<String>()
+    var mealsList = mutableListOf<Meals>()
+    var ingredientsInformation:String = ""
 
     // Coroutine function to search the database for meals that match a given name
     suspend fun getmealnamesfromdb(mealname: String,appDb: AppDatabase): Boolean {
