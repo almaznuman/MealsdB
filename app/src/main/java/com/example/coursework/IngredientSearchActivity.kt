@@ -93,7 +93,6 @@ class IngredientSearchActivity : AppCompatActivity() {
                 // If there are no meals in the mealsList, show a Toast message
                 Toast.makeText(this, "No meals to save", Toast.LENGTH_SHORT).show()
             }
-            clear()
         }
     }
 
@@ -184,11 +183,5 @@ class IngredientSearchActivity : AppCompatActivity() {
         runOnUiThread {
             tv.text =model.ingredientsInformation
         }
-    }
-    private fun clear(){
-        val model= ViewModelProvider(this)[ViewModel::class.java]
-        model.mealsList.clear()
-        model.ingredientsInformation=""
-        tv.text=""
     }
 }
