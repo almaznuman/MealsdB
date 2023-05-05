@@ -189,5 +189,6 @@ class IngredientSearchActivity : AppCompatActivity() {
         val model= ViewModelProvider(this)[ViewModel::class.java]
         model.mealsList.clear()
         model.ingredientsInformation=""
+        tv.text=""
     }
 }
