@@ -46,12 +46,14 @@ class ViewModel: ViewModel() {
         withContext(Dispatchers.IO) {
             val mealnames = appDb.mealsdao().getMealNamesByIngredient(mealname)
             val mealthumb = appDb.mealsdao().getMealThumbByIngredient(mealname)
+            val mealcategory= appDb.mealsdao().getMealcategorybymealname(mealname)
             withContext(Dispatchers.Main) {
 
                 // If meals were found, add them to the appropriate lists
                 if (mealnames.isNotEmpty()) {
                     mealnamelist.addAll(mealnames)
                     mealthumbnaillist.addAll(mealthumb)
+                    mealCategorylist.addAll(mealcategory)
                     isNotEmpty = true
                 }
             }
