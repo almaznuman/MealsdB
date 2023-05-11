@@ -29,7 +29,7 @@ class SearchForMeals : AppCompatActivity() {
         // Initialize necessary views and adapters
         editText = findViewById(R.id.edit_text)
         button = findViewById(R.id.button)
-        var model= ViewModelProvider(this).get(ViewModel::class.java)
+        val model= ViewModelProvider(this).get(ViewModel::class.java)
         val myAdapter = MyListAdapter(this, model.mealnamelist, model.mealthumbnaillist,model.mealCategorylist)
         recyclerView = findViewById(R.id.recyclerview)
         recyclerView.adapter = myAdapter
@@ -73,7 +73,7 @@ class SearchForMeals : AppCompatActivity() {
         }
     }
     private fun clearlists(){
-        var model= ViewModelProvider(this).get(ViewModel::class.java)
+        val model= ViewModelProvider(this).get(ViewModel::class.java)
         model.mealCategorylist.clear()
         model.mealnamelist.clear()
         model.mealthumbnaillist.clear()

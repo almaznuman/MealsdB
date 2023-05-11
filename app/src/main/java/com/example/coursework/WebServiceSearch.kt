@@ -25,7 +25,7 @@ class WebServiceSearch : AppCompatActivity() {
         editText = findViewById(R.id.edit_text)
         button = findViewById(R.id.button)
         recyclerView = findViewById(R.id.recyclerview)
-        var model= ViewModelProvider(this).get(ViewModel::class.java)
+        val model= ViewModelProvider(this).get(ViewModel::class.java)
         // Create an adapter for the RecyclerView and set it
         val myAdapter = MyListAdapter(this, model.mealnamelist, model.mealthumbnaillist,model.mealCategorylist)
         recyclerView.adapter = myAdapter
@@ -54,7 +54,7 @@ class WebServiceSearch : AppCompatActivity() {
     }
 
     private fun clearlists(){
-        var model= ViewModelProvider(this).get(ViewModel::class.java)
+        val model= ViewModelProvider(this).get(ViewModel::class.java)
         model.mealCategorylist.clear()
         model.mealnamelist.clear()
         model.mealthumbnaillist.clear()
