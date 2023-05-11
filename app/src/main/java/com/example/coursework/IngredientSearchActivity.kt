@@ -43,6 +43,7 @@ class IngredientSearchActivity : AppCompatActivity() {
 
         // Set an OnClickListener for the "Search" button
         button.setOnClickListener {
+            clearlists()
             it.startAnimation(buttonClick)
             scrollView2.scrollTo(0, 0)
             if (editText.text.isBlank()) {
@@ -93,6 +94,7 @@ class IngredientSearchActivity : AppCompatActivity() {
                 // If there are no meals in the mealsList, show a Toast message
                 Toast.makeText(this, "No meals to save", Toast.LENGTH_SHORT).show()
             }
+            clearlists()
         }
     }
 
@@ -178,10 +180,15 @@ class IngredientSearchActivity : AppCompatActivity() {
                     )
                 )
             }
-            model.ingredientsInformation= allmeals.toString()
-        }//adding to the UI textview
+        }
+        model.ingredientsInformation= allmeals.toString()
+        //adding to the UI textview
         runOnUiThread {
             tv.text =model.ingredientsInformation
         }
+    }
+    private fun clearlists(){
+        val model= ViewModelProvider(this).get(ViewModel::class.java)
+        model.mealsList.clear()
     }
 }
