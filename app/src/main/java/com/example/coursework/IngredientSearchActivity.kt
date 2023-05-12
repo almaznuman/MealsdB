@@ -94,7 +94,6 @@ class IngredientSearchActivity : AppCompatActivity() {
                 // If there are no meals in the mealsList, show a Toast message
                 Toast.makeText(this, "No meals to save", Toast.LENGTH_SHORT).show()
             }
-            clearlists()
         }
     }
 
