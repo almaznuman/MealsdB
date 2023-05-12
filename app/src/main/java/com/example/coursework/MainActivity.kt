@@ -1,7 +1,6 @@
 package com.example.coursework
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -89,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    @OptIn(DelicateCoroutinesApi::class)
+
     private fun writeData() {
         //Hardcoding Database entries
         val meal1 = Meals(
