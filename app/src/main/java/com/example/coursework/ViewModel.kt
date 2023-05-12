@@ -19,7 +19,8 @@ class ViewModel: ViewModel() {
     var mealsList = mutableListOf<Meals>()
     var ingredientsInformation:String = ""
 
-    // Coroutine function to search the database for meals that match a given name
+    /** Coroutine function to search the database for meals that match a given name
+     */
     suspend fun getmealnamesfromdb(mealname: String,appDb: AppDatabase): Boolean {
         var isNotEmpty = false
         withContext(Dispatchers.IO) {
@@ -40,7 +41,8 @@ class ViewModel: ViewModel() {
         return isNotEmpty
     }
 
-    // Coroutine function to search the database for meals that match an ingredient
+    /** Coroutine function to search the database for meals that match an ingredient
+     */
     suspend fun getmealingredientfromdb(mealname: String,appDb: AppDatabase): Boolean {
         var isNotEmpty = false
         withContext(Dispatchers.IO) {
@@ -61,6 +63,8 @@ class ViewModel: ViewModel() {
         return isNotEmpty
     }
 
+    /** Web service meal search function
+     */
     fun apiConnection(mealname: String): Boolean {
         var isempty = false
         val url = URL("https://www.themealdb.com/api/json/v1/1/search.php?s=$mealname")

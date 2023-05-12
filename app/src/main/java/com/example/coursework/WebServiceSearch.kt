@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 class WebServiceSearch : AppCompatActivity() {
     private lateinit var appDb: AppDatabase
     private lateinit var recyclerView: RecyclerView
-    //button animations
+
+    /**button animations
+     */
     private val buttonClick = AlphaAnimation(1f, 0.8f)
     private lateinit var editText: EditText
     private lateinit var button: Button
@@ -53,6 +55,8 @@ class WebServiceSearch : AppCompatActivity() {
         }
     }
 
+    /** Clear the lists
+     */
     private fun clearlists(){
         val model= ViewModelProvider(this).get(ViewModel::class.java)
         model.mealCategorylist.clear()

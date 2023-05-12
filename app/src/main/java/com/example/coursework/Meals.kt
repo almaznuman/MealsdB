@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//Dataclass for meals
+/**Dataclass for meals
+ */
 @Entity(tableName = "meals")
 data class Meals(
     @PrimaryKey @ColumnInfo(name = "id") val id: Int?,

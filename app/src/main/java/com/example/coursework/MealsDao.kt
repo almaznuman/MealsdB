@@ -2,7 +2,8 @@ package com.example.coursework
 
 import androidx.room.*
 
-//Data Access Object class for meals
+/**Data Access Object class for meals
+ */
 @Dao
 interface MealsDao {
     //query to get meal name where meal name is like the input

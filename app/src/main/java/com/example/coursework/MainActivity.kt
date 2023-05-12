@@ -20,25 +20,30 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button3: Button
     private lateinit var button4: Button
 
-    //button animations
+    /**button animations
+     */
     private val buttonClick = AlphaAnimation(1f, 0.8f) // Button click animation
 
-    // Declare database variable
+    /** Declare database variable
+     */
     private lateinit var appDb: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // Initialize database variable
+        /** Initialize database variable
+         */
         appDb = AppDatabase.getDatabase(this)
 
-        // Find buttons by ID
+        /** Find buttons by ID
+         */
         button1 = findViewById(R.id.button1)
         button2 = findViewById(R.id.button2)
         button3 = findViewById(R.id.button3)
         button4 = findViewById(R.id.button4)
 
-        //check for internet connection
+        /**check for internet connection
+         */
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val network = cm.activeNetwork
         val capabilities = cm.getNetworkCapabilities(network)
@@ -58,7 +63,8 @@ class MainActivity : AppCompatActivity() {
                 .setCancelable(false)
                 .show()
         }
-        // Set onClickListeners for buttons
+        /** Set onClickListeners for buttons
+         */
         button1.setOnClickListener {
             // Start button click animation
             it.startAnimation(buttonClick)
@@ -87,8 +93,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
+    /**
+     * Write data to database
+     */
     private fun writeData() {
         //Hardcoding Database entries
         val meal1 = Meals(

@@ -16,17 +16,21 @@ import kotlinx.coroutines.launch
 class SearchForMeals : AppCompatActivity() {
     private lateinit var appDb: AppDatabase
     private lateinit var recyclerView: RecyclerView
-    //button animations
+
+    /**button animations
+     */
     private val buttonClick = AlphaAnimation(1f, 0.8f)
     private lateinit var editText: EditText
     private lateinit var button: Button
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Get the AppDatabase instance
+        /** Get the AppDatabase instance
+         */
         appDb = AppDatabase.getDatabase(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recylerview)
 
-        // Initialize necessary views and adapters
+        /** Initialize necessary views and adapters
+         */
         editText = findViewById(R.id.edit_text)
         button = findViewById(R.id.button)
         val model= ViewModelProvider(this).get(ViewModel::class.java)
@@ -72,6 +76,9 @@ class SearchForMeals : AppCompatActivity() {
             }
         }
     }
+
+    /** Clear the lists
+     */
     private fun clearlists(){
         val model= ViewModelProvider(this).get(ViewModel::class.java)
         model.mealCategorylist.clear()

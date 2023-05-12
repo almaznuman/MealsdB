@@ -19,7 +19,9 @@ import java.net.URL
 
 //Reference https://youtu.be/JkFGUJyY-bQ
 
-//class constructor receives the context as well as two list to inflate the layout with relevant meal details
+
+/**class constructor receives the context as well as two list to inflate the layout with relevant meal details
+ */
 class MyListAdapter(
     private val context: Context,
     private val mylist: ArrayList<String>,
@@ -28,16 +30,21 @@ class MyListAdapter(
 ) : RecyclerView.Adapter<MyListAdapter.MyViewHolder>() {
 
 
-    //inflates the view with an meal item
+    /**inflates the view with an meal item
+     */
     override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): MyViewHolder {
         val mylistitem = LayoutInflater.from(context).inflate(R.layout.list, viewgroup, false)
         return MyViewHolder(mylistitem)
     }
-    //returns the item count
+
+    /**returns the item count
+     */
     override fun getItemCount(): Int {
         return mylist.count()
     }
-    //binds the details to the context view
+
+    /**binds the details to the context view
+     */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(mylist[position], mylist2[position],mylist3[position])
     }
@@ -55,7 +62,9 @@ class MyListAdapter(
             }
         }
     }
-    //Displays the image from the url function
+
+    /**Displays the image from the url function
+     */
     fun displayImageFromUrl(imageView: ImageView, url: String) {
         //Co-routine used to load up images in the background to prevent blocking the main thread
         GlobalScope.launch(Dispatchers.IO) {
