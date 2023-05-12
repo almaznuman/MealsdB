@@ -18,8 +18,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 //Reference https://youtu.be/JkFGUJyY-bQ
-
-
 /**class constructor receives the context as well as two list to inflate the layout with relevant meal details
  */
 class MyListAdapter(
@@ -28,7 +26,6 @@ class MyListAdapter(
     private val mylist2: ArrayList<String>,
     private val mylist3:ArrayList<String>
 ) : RecyclerView.Adapter<MyListAdapter.MyViewHolder>() {
-
 
     /**inflates the view with an meal item
      */

@@ -56,27 +56,11 @@ class SearchForMeals : AppCompatActivity() {
                     // If meals were found, update the adapter with the new data
                     if (isNotEmpty) {
                         myAdapter.notifyDataSetChanged()
-                        // If no meals were found with that name, search for meals that contain that ingredient
-                    } else {
-                        val isNotEmpty2 = model.getmealingredientfromdb(information,appDb)
-                        // If meals were found, update the adapter with the new data
-                        if (isNotEmpty2) {
-                            myAdapter.notifyDataSetChanged()
-                            // If no meals were found, display a message to the user
-                        } else {
-                            clearlists()
-                            Toast.makeText(
-                                this@SearchForMeals,
-                                "No meals found",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
                     }
                 }
             }
         }
     }
-
     /** Clear the lists
      */
     private fun clearlists(){
