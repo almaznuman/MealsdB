@@ -15,7 +15,8 @@ import java.net.URL
 
 class IngredientSearchActivity : AppCompatActivity() {
 
-    // Declare the properties of the class
+    /** Declare the properties of the class
+     */
     private lateinit var appDb: AppDatabase
     private lateinit var button: Button
     private lateinit var button3: Button
@@ -23,16 +24,19 @@ class IngredientSearchActivity : AppCompatActivity() {
     private lateinit var editText: EditText
     private lateinit var tv: TextView
 
-    // button animations
+    /** button animations
+     */
     private val buttonClick = AlphaAnimation(1f, 0.8f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredient_search)
-        // Initialize the app database
+        /** Initialize the app database
+         */
         appDb = AppDatabase.getDatabase(this)
         val model= ViewModelProvider(this)[ViewModel::class.java]
-        // Create a StringBuilder object to hold the JSON response
+        /** Create a StringBuilder object to hold the JSON response
+         */
         val stb = StringBuilder()
         button = findViewById(R.id.button)
         button3 = findViewById(R.id.button3)
@@ -41,7 +45,8 @@ class IngredientSearchActivity : AppCompatActivity() {
         tv = findViewById(R.id.tv)
         tv.text =model.ingredientsInformation
 
-        // Set an OnClickListener for the "Search" button
+        /** Set an OnClickListener for the "Search" button
+         */
         button.setOnClickListener {
             clearlists()
             it.startAnimation(buttonClick)
@@ -50,7 +55,8 @@ class IngredientSearchActivity : AppCompatActivity() {
                 // If the search box is blank, show a Toast message
                 Toast.makeText(this, "Please enter an ingredient", Toast.LENGTH_SHORT).show()
             } else {
-                // If the search box is not blank, get the user's input and construct a URL to call the API
+                /** If the search box is not blank, get the user's input and construct a URL to call the API
+                 */
                 val ingredient = editText.text.toString()
                 val url = URL("https://www.themealdb.com/api/json/v1/1/filter.php?i=$ingredient")
                 val con: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -74,7 +80,8 @@ class IngredientSearchActivity : AppCompatActivity() {
             }
         }
 
-        // Set an OnClickListener for the "Save" button
+        /** Set an OnClickListener for the "Save" button
+         */
         button3.setOnClickListener {
             it.startAnimation(buttonClick)
             if (model.mealsList.size > 0) {
@@ -97,6 +104,8 @@ class IngredientSearchActivity : AppCompatActivity() {
         }
     }
 
+    /** api connection to mealsdb to search by mealname after getting the ingredient match from the first api call
+     */
     private fun apiConnection(stb: StringBuilder) {
         val model= ViewModelProvider(this).get(ViewModel::class.java)
         // Convert the StringBuilder to a JSONObject
@@ -186,6 +195,8 @@ class IngredientSearchActivity : AppCompatActivity() {
             tv.text =model.ingredientsInformation
         }
     }
+    /** Clear the lists
+     */
     private fun clearlists(){
         val model= ViewModelProvider(this).get(ViewModel::class.java)
         model.mealsList.clear()
