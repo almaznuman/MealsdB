@@ -69,10 +69,10 @@ class ViewModel: ViewModel() {
                         //iterate through the array and add the meal names and images to the lists
                         for (i in 0 until mealsArray.length()) {
                             val meal: JSONObject = mealsArray[i] as JSONObject
-                            val mealname = meal["strMeal"] as String
+                            val mealName = meal["strMeal"] as String
                             val mealImagesource = meal["strMealThumb"] as String
                             val mealcategory=meal["strCategory"] as String
-                            mealnamelist.add(mealname)
+                            mealnamelist.add(mealName)
                             mealthumbnaillist.add(mealImagesource)
                             mealCategorylist.add(mealcategory)
                         }
