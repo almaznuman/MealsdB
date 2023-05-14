@@ -56,6 +56,7 @@ class SearchForMeals : AppCompatActivity() {
                     // If meals were found, update the adapter with the new data
                     if (isNotEmpty) {
                         myAdapter.notifyDataSetChanged()
+                        recyclerView.layoutManager?.smoothScrollToPosition(recyclerView, RecyclerView.State(), 0)
                     }
                 }
             }

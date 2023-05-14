@@ -50,6 +50,7 @@ class WebServiceSearch : AppCompatActivity() {
                     Toast.makeText(this, "No meals found", Toast.LENGTH_SHORT).show()
                 } else {
                     myAdapter.notifyDataSetChanged()
+                    recyclerView.layoutManager?.smoothScrollToPosition(recyclerView, RecyclerView.State(), 0)
                 }
             }
         }
