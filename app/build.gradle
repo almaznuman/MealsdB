@@ -46,4 +46,5 @@ dependencies {
     kapt "androidx.room:room-compiler:2.5.1"
     annotationProcessor "androidx.room:room-compiler:2.5.1"
     implementation "androidx.room:room-ktx:2.5.1"
+    implementation("io.coil-kt:coil:2.4.0")
 }

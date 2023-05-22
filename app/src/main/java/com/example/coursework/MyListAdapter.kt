@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import coil.load
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -51,7 +52,8 @@ class MyListAdapter(
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
 
         fun bind(myItem: String, myitem2: String,myitem3:String) {
-            displayImageFromUrl(imageView,myitem2)
+//            displayImageFromUrl(imageView,myitem2)
+            imageView.load(myitem2)
             itemView.findViewById<TextView>(R.id.tv).text = myItem
             itemView.findViewById<TextView>(R.id.tv1).text = myitem3
             itemView.setOnClickListener {
